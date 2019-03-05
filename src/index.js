@@ -8,7 +8,10 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
+  {
+    console.log('store.getstate');
+    console.log(store.getState());
+  }
 );
 
 ReactDOM.render(

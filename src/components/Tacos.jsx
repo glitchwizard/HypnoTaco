@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import  types  from '../redux';
 import PropTypes from 'prop-types';
+import TacoRecipe from './TacoRecipe';
 
 class Tacos extends React.Component {
   constructor(props){
@@ -11,27 +12,10 @@ class Tacos extends React.Component {
     let _name = null;
     this.dispatch = this.props.dispatch;
 
-    this.handleAddNewTaco = this.handleAddNewTaco.bind(this);
     this.handleLogCurrentState = this.handleLogCurrentState.bind(this);
   }
 
-
-  handleAddNewTaco(event){
-    console.log("handleAddNewTaco click");
-    event.preventDefault();
-    const action = {
-      type: types.ADD_TACO,
-      payload: {
-        id: v4(),
-        tacoName: this._name.value
-      }
-    };
-    this.dispatch(action);
-    this._name.value = '';
-  }
-
   handleLogCurrentState(event){
-    console.log("handleLogCurrentState click");
     event.preventDefault();
     const action = {
       type: types.LOG__CURRENT_STATE
@@ -39,19 +23,17 @@ class Tacos extends React.Component {
     this.dispatch(action);
   }
 
+
   render() {
   return <div>
         <Link to="/">Home</Link>
         <h2>Tacos!</h2>
-    <div>
-      <form onSubmit={this.handleAddNewTaco}>
-        <input type='text' id='bar' placeholder='Find Tacos' ref={(input) => {this._name = input;}}/><button type='submit'>Submit</button>
-      </form>
+        <TacoRecipe/>
       <div>
-        <button type='button' onClick={this.handleLogCurrentState}>Show Current State</button>
+        <button type='button' onClick={this.handleLogCurrentState}>Show Current Redux State</button>
       </div>
     </div>
-  </div>
+
   }
 }
 
