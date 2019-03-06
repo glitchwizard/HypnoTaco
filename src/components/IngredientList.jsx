@@ -18,6 +18,7 @@ class IngredientList extends React.Component {
     let numOfIngredients = this.props.numberOfIngredients;
   }
 
+// TODO: Need to get this list rendering dynamically upon button press.
 
   render() {
     return <form onSubmit={this.onAddNewTaco} >
