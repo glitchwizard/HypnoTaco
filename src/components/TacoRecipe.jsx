@@ -2,13 +2,14 @@ import React from 'react';
 import {v4} from 'uuid';
 import  types  from '../redux';
 import { connect } from 'react-redux';
+import IngredientList from './IngredientList';
 
 class TacoRecipe extends React.Component {
   constructor(props){
     super(props);
     this._name = '';
     this.state = {
-      numberOfIngredients: 1
+      numberOfIngredients: 0
     };
 
     this.handleAddAdditionalIngredientToForm = this.handleAddAdditionalIngredientToForm.bind(this);
@@ -23,7 +24,11 @@ class TacoRecipe extends React.Component {
     this.setState(
       {
         numberOfIngredients: newState.numberOfIngredients,
-        ['ingredientNumber'+newState.numberOfIngredients] : ''
+        ['ingredientNumber'+newState.numberOfIngredients] :
+          {
+            name: 'tacoName'+ newState.numberOfIngredients,
+            ['qtyOfItem'+newState.numberOfIngredients]: 'quantity goes here'
+          }
       }
     );
     console.log('this.state');
@@ -75,6 +80,20 @@ class TacoRecipe extends React.Component {
     this._name.value = '';
   }
 
+  handleAddAdditionalIngredientToForm = (event) => {
+    console.log('handleAddAdditionalIngredientToForm click');
+    let newState = this.state;
+    newState.numberOfIngredients = this.state.numberOfIngredients + 1;
+    this.setState(
+      {
+        numberOfIngredients: newState.numberOfIngredients,
+        ['ingredientNumber'+newState.numberOfIngredients] : ''
+      }
+    );
+    console.log('this.state');
+    console.log(this.state);
+  }
+
   handleLogCurrentLocalState = (event) =>{
     console.log('this.state');
     console.log(this.state);
@@ -82,18 +101,9 @@ class TacoRecipe extends React.Component {
 
   render() {
     return <div>
-        <form onSubmit={this.handleAddNewTaco}>
-          <input type='text' id='bar' placeholder='Name of the Taco' ref={(input) => {this._name = input;}}/>
-          <p />
-          <button type='button' onClick={this.handleAddAdditionalIngredientToForm}> Add an ingredient </button>
-          <ol id="ingredientList">Ingredient:
-            <li>
-              <input key="1" placeholder="Ingredient #1" type="text" id="ingredientNumber1" /> Qty: <input id='qty1'></input>
-            </li>
-          </ol>
+      state.numberOfIngredients: {this.state.numberOfIngredients}
+        <IngredientList numberOfIngredients={this.state.numberOfIngredients} onAddAdditionalIngredientToForm={this.handleAddAdditionalIngredientToForm} onAddNewTaco={this.handleAddNewTaco}/>
 
-          <button type='submit'>Submit</button>
-        </form>
         <button type='button' onClick={this.handleLogCurrentLocalState}>Log Local State</button>
       </div>
   }
